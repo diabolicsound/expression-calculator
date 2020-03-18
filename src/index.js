@@ -28,12 +28,12 @@ function expressionCalculator(expr) {
       "/": 2,
   }
   for (let i = 0; i < arr.length; i++) {
-    if (isNaN(arr[i]) && stack2[stack2.length - 1] == "-" && arr[i] !== "+") {
+   /* if (isNaN(+arr[i]) && stack2[stack2.length - 1] == "-" && arr[i] !== "+") {
         stack1[stack1.length - 1] = -(stack1[stack1.length - 1]);
-        stack2[stack2.length - 1] = "+"
+        stack2[stack2.length - 1] = "+";
         stack2.push(arr[i]);
-    }
-     else if (isNaN(+arr[i]) == false && arr[i] !== "") {
+    } */
+     if (isNaN(+arr[i]) == false && arr[i] !== "") {
           stack1.push(+arr[i]);
       }
      
@@ -119,7 +119,7 @@ function expressionCalculator(expr) {
         }
       }
     } 
-    for (let j = 0; j < 5; j++){
+    for (let j = 0; j < 15; j++){
      if (stack2[stack2.length - 1] == "-") {
         let mini = stack1[stack1.length - 2] - stack1[stack1.length - 1];
         stack1.pop();
@@ -127,14 +127,6 @@ function expressionCalculator(expr) {
         stack1.push(mini);
        stack2.pop();
     } 
-    /*if (stack2[stack2.length - 1] == "-") {
-        let mini = stack1[stack1.length - 2] - stack1[stack1.length - 1];
-        stack1.pop();
-        stack1.pop();
-        stack1.push(mini);
-       stack2.pop();
-    } */
-    
 for (let j = 0; j < 5; j++){
      if (stack2[stack2.length - 1] == "-") {
         let mini = stack1[stack1.length - 2] - stack1[stack1.length - 1];
@@ -165,7 +157,7 @@ for (let j = 0; j < 5; j++){
         stack1.push(div2);
        stack2.pop();
     
-    } 
+    } }
     
 } /*
 console.log(stack1)
@@ -174,7 +166,7 @@ console.log(-(stack1[1]))
 */
 return stack1[0];
 }
-}
+
 module.exports = {
     expressionCalculator
 }
