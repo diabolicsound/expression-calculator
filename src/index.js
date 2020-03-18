@@ -3,6 +3,7 @@ function expressionCalculator(expr) {
     if (expr.includes('/ 0')) {
         throw Error('TypeError: Division by zero.');
     }
+
     let openbrack = 0;
     let closebrack = 0;
 
@@ -18,6 +19,10 @@ function expressionCalculator(expr) {
        throw Error('ExpressionError: Brackets must be paired')
    }
     let arr = expr.split(' ');
+    let edit = expr.replace(/[0-9]/gi, ' $& ')
+    if (expr.match(/\s/g) == null) {
+       arr = edit.split(' ');
+    }
   let stack1 = [];
   let stack2 = [];
   let stack3 = [];
@@ -28,12 +33,7 @@ function expressionCalculator(expr) {
       "/": 2,
   }
   for (let i = 0; i < arr.length; i++) {
-   /* if (isNaN(+arr[i]) && stack2[stack2.length - 1] == "-" && arr[i] !== "+") {
-        stack1[stack1.length - 1] = -(stack1[stack1.length - 1]);
-        stack2[stack2.length - 1] = "+";
-        stack2.push(arr[i]);
-    } */
-     if (isNaN(+arr[i]) == false && arr[i] !== "") {
+     if (isNaN(+arr[i]) == false && arr[i] !== "" ) {
           stack1.push(+arr[i]);
       }
      
@@ -49,18 +49,86 @@ function expressionCalculator(expr) {
               stack1.pop();
               stack1.push(add);
               stack2.pop();
-              stack2.push(arr[i]);
+              if (obj[arr[i]] <= obj[stack2[stack2.length - 1]] && stack2[stack2.length - 1] == "+")  {
+                let add4 = stack1[stack1.length -2] + stack1[stack1.length -1];
+                stack1.pop();
+                stack1.pop();
+                stack1.push(add4);
+                stack2.pop();
+                stack2.push(arr[i])
+              }
+              else if (obj[arr[i]] <= obj[stack2[stack2.length - 1]] && stack2[stack2.length - 1] == "-")  {
+                let sub4 = stack1[stack1.length -2] - stack1[stack1.length -1];
+                stack1.pop();
+                stack1.pop();
+                stack1.push(sub4);
+                stack2.pop();
+                stack2.push(arr[i])
+              }
+              else if (obj[arr[i]] <= obj[stack2[stack2.length - 1]] && stack2[stack2.length - 1] == "*") {
+                let mul4 = stack1[stack1.length -2] * stack1[stack1.length -1];
+                stack1.pop();
+                stack1.pop();
+                stack1.push(mul4);
+                stack2.pop();
+                stack2.push(arr[i]);
+            }
+            else if (obj[arr[i]] <= obj[stack2[stack2.length - 1]] && stack2[stack2.length - 1] == "/") {
+                let div4 = stack1[stack1.length -2] / stack1[stack1.length -1];
+                stack1.pop();
+                stack1.pop();
+                stack1.push(div4);
+                stack2.pop();
+                stack2.push(arr[i]);
+            }
 
+            else {
+              stack2.push(arr[i]);
           }
+        }
          else if (stack2[stack2.length - 1] == "-") {
             let sub = stack1[stack1.length -2] - stack1[stack1.length -1];
             stack1.pop();
             stack1.pop();
             stack1.push(sub);
             stack2.pop();
-            stack2.push(arr[i]);
+            if (obj[arr[i]] <= obj[stack2[stack2.length - 1]] && stack2[stack2.length - 1] == "+")  {
+                let add4 = stack1[stack1.length -2] + stack1[stack1.length -1];
+                stack1.pop();
+                stack1.pop();
+                stack1.push(add4);
+                stack2.pop();
+                stack2.push(arr[i])
+              }
+              else if (obj[arr[i]] <= obj[stack2[stack2.length - 1]] && stack2[stack2.length - 1] == "-")  {
+                let sub4 = stack1[stack1.length -2] - stack1[stack1.length -1];
+                stack1.pop();
+                stack1.pop();
+                stack1.push(sub4);
+                stack2.pop();
+                stack2.push(arr[i])
+              }
+              else if (obj[arr[i]] <= obj[stack2[stack2.length - 1]] && stack2[stack2.length - 1] == "*") {
+                let mul4 = stack1[stack1.length -2] * stack1[stack1.length -1];
+                stack1.pop();
+                stack1.pop();
+                stack1.push(mul4);
+                stack2.pop();
+                stack2.push(arr[i]);
+            }
+            else if (obj[arr[i]] <= obj[stack2[stack2.length - 1]] && stack2[stack2.length - 1] == "/") {
+                let div4 = stack1[stack1.length -2] / stack1[stack1.length -1];
+                stack1.pop();
+                stack1.pop();
+                stack1.push(div4);
+                stack2.pop();
+                stack2.push(arr[i]);
+            }
 
-
+            else {
+              stack2.push(arr[i]);
+          }
+         
         }
         else if (stack2[stack2.length - 1] == "*") {
             let mul = stack1[stack1.length -2] * stack1[stack1.length -1];
@@ -68,7 +136,43 @@ function expressionCalculator(expr) {
             stack1.pop();
             stack1.push(mul);
             stack2.pop();
-            stack2.push(arr[i]);
+            if (obj[arr[i]] <= obj[stack2[stack2.length - 1]] && stack2[stack2.length - 1] == "+")  {
+                let add4 = stack1[stack1.length -2] + stack1[stack1.length -1];
+                stack1.pop();
+                stack1.pop();
+                stack1.push(add4);
+                stack2.pop();
+                stack2.push(arr[i])
+              }
+              else if (obj[arr[i]] <= obj[stack2[stack2.length - 1]] && stack2[stack2.length - 1] == "-")  {
+                let sub4 = stack1[stack1.length -2] - stack1[stack1.length -1];
+                stack1.pop();
+                stack1.pop();
+                stack1.push(sub4);
+                stack2.pop();
+                stack2.push(arr[i])
+              }
+              else if (obj[arr[i]] <= obj[stack2[stack2.length - 1]] && stack2[stack2.length - 1] == "*") {
+                let mul4 = stack1[stack1.length -2] * stack1[stack1.length -1];
+                stack1.pop();
+                stack1.pop();
+                stack1.push(mul4);
+                stack2.pop();
+                stack2.push(arr[i]);
+            }
+            else if (obj[arr[i]] <= obj[stack2[stack2.length - 1]] && stack2[stack2.length - 1] == "/") {
+                let div4 = stack1[stack1.length -2] / stack1[stack1.length -1];
+                stack1.pop();
+                stack1.pop();
+                stack1.push(div4);
+                stack2.pop();
+                stack2.push(arr[i]);
+            }
+
+            else {
+              stack2.push(arr[i]);
+          }
+        
         }
         else if (stack2[stack2.length - 1] == "/") {
             let div = stack1[stack1.length -2] / stack1[stack1.length -1];
@@ -76,7 +180,43 @@ function expressionCalculator(expr) {
             stack1.pop();
             stack1.push(div);
             stack2.pop();
-            stack2.push(arr[i]);
+            if (obj[arr[i]] <= obj[stack2[stack2.length - 1]] && stack2[stack2.length - 1] == "+")  {
+                let add4 = stack1[stack1.length -2] + stack1[stack1.length -1];
+                stack1.pop();
+                stack1.pop();
+                stack1.push(add4);
+                stack2.pop();
+                stack2.push(arr[i])
+              }
+              else if (obj[arr[i]] <= obj[stack2[stack2.length - 1]] && stack2[stack2.length - 1] == "-")  {
+                let sub4 = stack1[stack1.length -2] - stack1[stack1.length -1];
+                stack1.pop();
+                stack1.pop();
+                stack1.push(sub4);
+                stack2.pop();
+                stack2.push(arr[i])
+              }
+              else if (obj[arr[i]] <= obj[stack2[stack2.length - 1]] && stack2[stack2.length - 1] == "*") {
+                let mul4 = stack1[stack1.length -2] * stack1[stack1.length -1];
+                stack1.pop();
+                stack1.pop();
+                stack1.push(mul4);
+                stack2.pop();
+                stack2.push(arr[i]);
+            }
+            else if (obj[arr[i]] <= obj[stack2[stack2.length - 1]] && stack2[stack2.length - 1] == "/") {
+                let div4 = stack1[stack1.length -2] / stack1[stack1.length -1];
+                stack1.pop();
+                stack1.pop();
+                stack1.push(div4);
+                stack2.pop();
+                stack2.push(arr[i]);
+            }
+
+            else {
+              stack2.push(arr[i]);
+          }
+        
         }
       }
       else if (isNaN(+arr[i]) && arr[i] !== ")") {
@@ -119,14 +259,6 @@ function expressionCalculator(expr) {
         }
       }
     } 
-    for (let j = 0; j < 15; j++){
-     if (stack2[stack2.length - 1] == "-") {
-        let mini = stack1[stack1.length - 2] - stack1[stack1.length - 1];
-        stack1.pop();
-        stack1.pop();
-        stack1.push(mini);
-       stack2.pop();
-    } 
 for (let j = 0; j < 5; j++){
      if (stack2[stack2.length - 1] == "-") {
         let mini = stack1[stack1.length - 2] - stack1[stack1.length - 1];
@@ -157,7 +289,7 @@ for (let j = 0; j < 5; j++){
         stack1.push(div2);
        stack2.pop();
     
-    } }
+    } 
     
 } /*
 console.log(stack1)
