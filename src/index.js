@@ -75,7 +75,44 @@ function expressionCalculator(expr) {
       else if (isNaN(+arr[i]) && arr[i] !== ")") {
         stack2.push(arr[i]);
       }
+
+      else if (isNaN(+arr[i]) && arr[i] == ")"){
+          while (stack2[stack2.length - 1] !== "(") {
+            if (stack2[stack2.length - 1] == "+") {
+                let add = stack1[stack1.length -2] + stack1[stack1.length -1];
+                stack1.pop();
+                stack1.pop();
+                stack1.push(add);
+                stack2.pop();
+            }
+           else if (stack2[stack2.length - 1] == "-") {
+              let sub = stack1[stack1.length -2] - stack1[stack1.length -1];
+              stack1.pop();
+              stack1.pop();
+              stack1.push(sub);
+              stack2.pop();
+          }
+          else if (stack2[stack2.length - 1] == "*") {
+              let mul = stack1[stack1.length -2] * stack1[stack1.length -1];
+              stack1.pop();
+              stack1.pop();
+              stack1.push(mul);
+              stack2.pop();
+          }
+          else if (stack2[stack2.length - 1] == "/") {
+              let div = stack1[stack1.length -2] / stack1[stack1.length -1];
+              stack1.pop();
+              stack1.pop();
+              stack1.push(div);
+              stack2.pop();
+          }
+          }
+          if ((stack2[stack2.length - 1] == "(")) {
+            stack2.pop()
+        }
+      }
     } 
+    
 for (let j = 0; j < 5; j++){
     if (stack2[stack2.length - 1] == "+") {
         let sum = stack1[stack1.length - 2] + stack1[stack1.length - 1];
